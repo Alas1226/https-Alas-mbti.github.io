@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八维功能倾向测试 · 荣格认知功能</title>
+<meta name="description" content="基于荣格八种认知功能的原创倾向测试。24 题，测出你在 Ne / Ni / Se / Si / Te / Ti / Fe / Fi 上的分布，并推测功能栈。">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<main class="wrap">
+
+  <!-- ───────── 封面 ───────── -->
+  <section id="intro" class="screen is-active">
+    <header class="hero">
+      <p class="eyebrow">荣格《心理类型》· 八种认知功能</p>
+      <h1>你靠什么<br>认识这个世界</h1>
+      <p class="lede">
+        不是把你塞进四个字母里。是看看你在
+        <em>直觉 / 感觉 / 思维 / 情感</em>
+        这四组能力上，各自往外走还是往回走。
+      </p>
+    </header>
+
+    <section class="versions">
+      <h2>选一个版本</h2>
+      <div class="ver-grid" id="verGrid"></div>
+      <p class="ver-note">
+        三个版本共用同一套题，只是题量不同——24 题版和 64 题版的题目都包含在 96 题版里。
+        题量越大，单题偶然性的影响越小，八个功能的分布也越稳。
+      </p>
+    </section>
+
+    <div class="meta-row">
+      <div class="meta"><b id="metaCount">64</b><span id="metaCountLabel">道情境题</span></div>
+      <div class="meta"><b id="metaTime">7</b><span>分钟</span></div>
+      <div class="meta"><b>8</b><span>个功能维度</span></div>
+    </div>
+
+    <button class="btn-primary" id="startBtn">开始测试</button>
+
+    <section class="theory">
+      <h2>八维是什么</h2>
+      <p class="theory-note">四组能力 × 两个方向。向外走（e）是跟外部世界打交道，往回走（i）是跟自己内部打交道。</p>
+      <ul class="func-grid">
+        <li><b>Ne</b><span>外倾直觉</span><i>一个点牵出很多可能</i></li>
+        <li><b>Ni</b><span>内倾直觉</span><i>先得到结论再回找理由</i></li>
+        <li><b>Se</b><span>外倾感觉</span><i>泡在当下，接住真实</i></li>
+        <li><b>Si</b><span>内倾感觉</span><i>拿过去比对现在</i></li>
+        <li><b>Te</b><span>外倾思维</span><i>把目标切成可执行顺序</i></li>
+        <li><b>Ti</b><span>内倾思维</span><i>要求定义准确、自洽</i></li>
+        <li><b>Fe</b><span>外倾情感</span><i>读取场上情绪并调温</i></li>
+        <li><b>Fi</b><span>内倾情感</span><i>先问对不对得起自己</i></li>
+      </ul>
+    </section>
+
+    <footer class="disclaimer">
+      <p><b>关于这个测试</b></p>
+      <p>题目为本项目原创编写，题库共 96 题。三个版本都做了权重配平：24 题版每个功能出现 12 次，64 题版 32 次，96 题版 48 次，没有任何一个维度靠多出题占便宜。它没有做常模校准，也没有经过心理测量学检验，因此不能用来判断你的心理健康、能力水平或职业适配。</p>
+      <p>它与 Myers-Briggs 官方 MBTI 测评无关，也不代表任何机构的正式评定。结果只是一面镜子，不是一张判决书。</p>
+    </footer>
+  </section>
+
+  <!-- ───────── 答题 ───────── -->
+  <section id="quiz" class="screen">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span id="qIndex">第 1 题 / 24</span>
+        <button class="link-btn" id="quitBtn">退出</button>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="q-body" id="qBody">
+      <h2 class="q-text" id="qText"></h2>
+      <p class="q-hint">选最接近你真实反应的那个，不要选「应该」的那个。</p>
+      <div class="options" id="options"></div>
+    </div>
+
+    <div class="q-foot">
+      <button class="link-btn" id="backBtn">← 上一题</button>
+      <span class="kbd-hint">按 1 – 4 快速选择</span>
+    </div>
+  </section>
+
+  <!-- ───────── 结果 ───────── -->
+  <section id="result" class="screen">
+    <p class="eyebrow result-eyebrow">你的功能栈</p>
+    <p class="ver-tag" id="verTag"></p>
+    <div class="type-head">
+      <h1 class="type-code" id="typeCode">INFJ</h1>
+      <p class="type-name" id="typeName">提倡者</p>
+      <p class="type-tag" id="typeTag"></p>
+      <p class="tie-note" id="tieNote" hidden></p>
+    </div>
+
+    <div class="stack-row" id="stackRow"></div>
+    <p class="shadow-line" id="shadowLine"></p>
+
+    <section class="block">
+      <h2>八维分布</h2>
+      <div class="radar-wrap">
+        <svg id="radar" viewBox="0 0 360 360" role="img" aria-label="八维功能分布雷达图"></svg>
+      </div>
+      <p class="axis-note">图形按本轮最高分归一化，只表示相对强弱，不代表你的绝对水平。同一功能在不同人身上差别很大。</p>
+    </section>
+
+    <section class="block">
+      <h2>为什么是这个类型</h2>
+      <div class="read" id="readLead"></div>
+      <div class="read" id="readAux"></div>
+      <div class="read" id="readBlind"></div>
+      <div class="trap">
+        <span>容易掉进去的坑</span>
+        <p id="readTrap"></p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>八个功能，你的读数</h2>
+      <ul class="bars" id="bars"></ul>
+    </section>
+
+    <div class="actions">
+      <button class="btn-primary" id="copyBtn">复制结果</button>
+      <button class="btn-ghost" id="againBtn">用同一版本再测一次</button>
+      <button class="link-btn center" id="changeVerBtn">换一个版本</button>
+    </div>
+
+    <footer class="disclaimer">
+      <p><b>请这样使用它</b></p>
+      <p>八维描述的是「你更常用哪套方式处理信息」，不是能力高低。同一功能在不同人身上成熟度差别很大，同一个人在不同时期也会漂移。</p>
+      <p>这是一个原创倾向测试，与官方 MBTI 无关，未做常模校准，不构成任何心理评估或建议。如果某段描述让你不太舒服，那可能只是题目没对准你，不必当成结论。</p>
+    </footer>
+  </section>
+
+</main>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
